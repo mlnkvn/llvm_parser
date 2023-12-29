@@ -13,11 +13,11 @@ class Statement(str: String) : Token {
         fun retrieveLastStatement(str: String): Pair<String, Statement> {
             val trimmed = str.trim()
             if (trimmed.endsWith("end")) {
-                val startPosition = trimmed.findLastAnyOf(listOf("if", "while")) ?: throw RuntimeException()
+                val startPosition = trimmed.findLastAnyOf(listOf("if", "while")) ?: throw LanguageStatementException(trimmed)
                 val statement = Statement(trimmed.substring(startPosition.first))
                 return Pair(trimmed.substring(0, startPosition.first), statement)
             }
-            val eqPosition = trimmed.findLastAnyOf(listOf("=")) ?: throw RuntimeException()
+            val eqPosition = trimmed.findLastAnyOf(listOf("=")) ?: throw LanguageStatementException(trimmed)
             var start = -1
             var end = -1
             for (pos in eqPosition.first - 1 downTo 0) {
